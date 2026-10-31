@@ -7,7 +7,7 @@ blended into one **Stage Confidence** score. For anyone who has to speak: a toas
 conference talk, or just stage fright. Built on [Anvil](https://anvil.works).
 
 - **App repo:** github.com/arkulinskis/mrbigstage (branch `master`). Anvil pulls `master`.
-- **Live:** not published yet (https://mrbigstage.anvil.app is the placeholder in the registry and the legal kit).
+- **Live:** https://mrbigstage.anvil.app
 
 ## What it does
 
