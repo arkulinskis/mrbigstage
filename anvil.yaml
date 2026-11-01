@@ -332,7 +332,7 @@ metadata:
   title: 'MrBigStage: practise public speaking in VR, with coaching'
 name: MrBigStage
 native_deps:
-  head_html: "<script src=\"_/theme/legal-kit.js?v=99abf8a9ea\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/mrbigstage.json\
+  head_html: "<script src=\"_/theme/legal-kit.js?v=7684f1a558\"></script>\n<!-- seo:start (APP_MAKER/seo: edit seo/apps/mrbigstage.json\
     \ and run seo.py, not here) -->\n<link rel=\"canonical\" href=\"https://mrbigstage.anvil.app/\">\n<meta name=\"robots\"\
     \ content=\"index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1\">\n<meta name=\"keywords\" content=\"\
     public speaking practice, VR public speaking, speech coach app, presentation practice, stage fright help, filler words\
