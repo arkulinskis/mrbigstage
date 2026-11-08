@@ -377,7 +377,7 @@ native_deps:
     })();\n</script>\n\n<!-- Prepsto feedback panel: every \"Submit feedback\" link and button opens it (it is the only feedback\
     \ channel). No floating button, no cookies, nothing loads until it is opened. Codes: APP_MAKER/prepsto-links.json -->\n\
     <script src=\"https://prepsto.com/_/theme/widget.js\" data-prepsto=\"8wz7aaf\" data-button=\"false\" data-label=\"Submit\
-    \ feedback\" async></script>\n<link rel=\"stylesheet\" href=\"_/theme/app.css?v=8bafadae39\">\n<script src=\"_/theme/app.js?v=4823d6eaef\"\
+    \ feedback\" async></script>\n<link rel=\"stylesheet\" href=\"_/theme/app.css?v=8bafadae39\">\n<script src=\"_/theme/app.js?v=bb87882419\"\
     ></script>\n"
 package_name: MrBigStage
 runtime_options:
