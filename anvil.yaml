@@ -355,7 +355,7 @@ native_deps:
     , \"image\": \"https://mrbigstage.anvil.app/_/theme/og-image.png\", \"serviceType\": \"Rehearse your talk on a big stage\
     \ and get coached on your voice\", \"provider\": {\"@id\": \"https://arkvital.com/#org\"}, \"areaServed\": \"Worldwide\"\
     , \"availableChannel\": {\"@type\": \"ServiceChannel\", \"serviceUrl\": \"https://mrbigstage.anvil.app/\", \"name\": \"\
-    Web browser\"}, \"availableLanguage\": \"en\", \"audience\": {\"@type\": \"Audience\", \"audienceType\": \"Anyone who\
+    Web browser\", \"availableLanguage\": \"en\"}, \"audience\": {\"@type\": \"Audience\", \"audienceType\": \"Anyone who\
     \ has to speak: a toast, an interview, a class, a pitch or a conference talk\"}}, {\"@type\": \"WebSite\", \"@id\": \"\
     https://mrbigstage.anvil.app/#site\", \"url\": \"https://mrbigstage.anvil.app/\", \"name\": \"MrBigStage\", \"publisher\"\
     : {\"@id\": \"https://arkvital.com/#org\"}}, {\"@type\": \"Organization\", \"@id\": \"https://arkvital.com/#org\", \"\
