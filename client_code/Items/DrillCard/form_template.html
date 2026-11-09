@@ -1,0 +1,18 @@
+<div class="dr-card-item">
+  <article class="ui-card dr-card" anvil:name="card">
+    <span class="flag" anvil:name="flag">For you</span>
+    <div class="top">
+      <span class="dr-ic"><i class="ic" anvil:name="icon"></i></span>
+      <div>
+        <anvil-component type="Label" name="name" bind:text="self.item['name']" prop:role='["dr-name"]'></anvil-component>
+        <anvil-component type="Label" name="meta" prop:role='["dr-min"]'></anvil-component>
+      </div>
+    </div>
+    <anvil-component type="Label" name="blurb" bind:text="self.item['blurb']" prop:role='["dr-blurb"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="chips" prop:item_template="MrBigStage.Items.Chip" prop:role='["chips"]'></anvil-component>
+    <div class="ui-row">
+      <a class="ui-btn primary sm" anvil:name="start" href="#drills"><i class="ic ic-play"></i>Start</a>
+      <span class="dr-done" anvil:name="done"><i class="ic ic-check"></i> Done before</span>
+    </div>
+  </article>
+</div>

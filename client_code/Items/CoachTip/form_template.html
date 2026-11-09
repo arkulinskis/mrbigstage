@@ -1,0 +1,10 @@
+<div class="rp-tip-item">
+  <div class="rp-tip">
+    <anvil-component type="Label" name="score" prop:role='["rp-sc"]'></anvil-component>
+    <div>
+      <anvil-component type="Label" name="label" bind:text="self.item['label']" prop:role='["rp-tip-t"]'></anvil-component>
+      <anvil-component type="Label" name="text" bind:text="self.item['text']" prop:role='["rp-tip-p"]'></anvil-component>
+      <a class="ui-btn sm" anvil:name="drill" href="#drills"><i class="ic" anvil:name="drill_icon"></i><anvil-component type="Label" name="drill_name" prop:role='["inline"]'></anvil-component></a>
+    </div>
+  </div>
+</div>

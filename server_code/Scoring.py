@@ -9,6 +9,7 @@ What "confidence" means here: an audience hears confidence as a combination of t
 decides it. Each part is scored against what good speakers do (content.PARTS has the ideal ranges), then
 weighted: fillers, pace, pauses, vocal variety and eye contact count most.
 """
+from typing import Any
 import math
 
 from . import content
@@ -166,8 +167,9 @@ def confidence(p):
     for part in content.PARTS:
         v = p.get(part["key"])
         if v is not None:
-            num += v * part["weight"]
-            den += part["weight"]
+            w: Any = part["weight"]
+            num += v * w
+            den += w
     return int(round(num / den)) if den else None
 
 

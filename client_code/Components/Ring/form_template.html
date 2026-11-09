@@ -1,0 +1,22 @@
+---
+custom_component: true
+properties:
+  - name: score
+    type: object
+    description: The score, 0 to 100 (None draws a dash)
+    default_binding_prop: true
+  - name: size
+    type: number
+    default_value: 140
+    description: Width and height in pixels
+  - name: label
+    type: string
+    default_value: ""
+    description: Small text under the number (the band name)
+toolbox_item:
+  title: Score ring
+  group: MrBigStage
+help_text: |
+  The Stage Confidence ring (MB.ring in theme/assets/mb.js).
+---
+<span class="mb-ring-host" anvil:dom-node="box"></span>

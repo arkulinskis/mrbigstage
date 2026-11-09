@@ -1,0 +1,12 @@
+<div class="bs-talk-item">
+  <div class="ui-card bs-talk">
+    <div>
+      <anvil-component type="Label" name="title" bind:text="self.item['title']" prop:role='["bs-talk-t"]'></anvil-component>
+      <div class="bs-talk-meta">
+        <anvil-component type="Label" name="meta" prop:role='["fine-print"]'></anvil-component>
+        <anvil-component type="Label" name="best" prop:role='["mb-score-l"]'></anvil-component>
+      </div>
+    </div>
+    <a class="ui-btn primary" anvil:name="go" href="#talks"><i class="ic ic-mic"></i>Practise</a>
+  </div>
+</div>

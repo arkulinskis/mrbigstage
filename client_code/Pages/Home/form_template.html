@@ -1,0 +1,108 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <section class="bs-hero">
+      <div class="ui-wrap">
+        <div>
+          <anvil-component type="Label" name="greeting" prop:role='["bs-greet"]'></anvil-component>
+          <h1 anvil:dom-node="headline">Your stage <em>is ready.</em></h1>
+          <anvil-component type="Label" name="lead" prop:role='["bs-lead"]'></anvil-component>
+          <div class="ui-row bs-cta">
+            <a class="ui-btn primary lg" anvil:name="practise_link" href="#stage/sample"><i class="ic ic-mic"></i><anvil-component type="Label" name="practise_text" prop:text="Try the sample talk" prop:role='["inline"]'></anvil-component></a>
+            <anvil-component type="Button" name="else_button" prop:text="Something else" prop:role='["btn", "btn-lg", "ic-sparkle"]'></anvil-component>
+          </div>
+        </div>
+        <div class="bs-level">
+          <div class="lv">
+            <anvil-component type="Label" name="lv_n" prop:role='["bs-lv-num"]'></anvil-component>
+            <div>
+              <anvil-component type="Label" name="lv_name" prop:role='["bs-lv-name"]'></anvil-component>
+              <anvil-component type="Label" name="lv_xp" prop:role='["bs-lv-xp"]'></anvil-component>
+            </div>
+          </div>
+          <div class="bs-xp"><i anvil:name="xp_bar"></i></div>
+          <div class="bs-mini">
+            <div><anvil-component type="Label" name="m_streak" prop:role='["bs-mini-n"]'></anvil-component><span>day streak</span></div>
+            <div><anvil-component type="Label" name="m_sessions" prop:role='["bs-mini-n"]'></anvil-component><span>sessions</span></div>
+            <div><anvil-component type="Label" name="m_audience" prop:role='["bs-mini-n"]'></anvil-component><span>people faced</span></div>
+          </div>
+          <div class="ui-row between bs-lv-foot">
+            <anvil-component type="Label" name="badges_line" prop:role='["bs-lv-xp"]'></anvil-component>
+            <a href="#progress">Your progress →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ui-wrap">
+      <div class="bs-grid">
+        <div class="bs-col">
+          <section class="bs-sec" anvil:name="goals_part">
+            <h2>What brings you to the stage?</h2>
+            <anvil-component type="RepeatingPanel" name="goals_panel" prop:item_template="MrBigStage.Items.GoalButton" prop:role='["bs-goals"]'></anvil-component>
+          </section>
+          <section class="bs-sec" anvil:name="first_part">
+            <h2>Three ways to start</h2>
+            <div class="bs-first">
+              <a class="ui-card" href="#stage/sample"><i class="ic ic-play"></i><b>Sample talk</b><span class="muted small">Six short cards on the Red Circle. Two minutes.</span></a>
+              <a class="ui-card" href="#talks/new"><i class="ic ic-cards"></i><b>Your own talk</b><span class="muted small">Start from a template or paste your script.</span></a>
+              <a class="ui-card" href="#stage/drill:breathe"><i class="ic ic-lungs"></i><b>Just breathe</b><span class="muted small">Nervous? Two minutes of box breathing in the empty theatre.</span></a>
+            </div>
+          </section>
+          <section class="bs-sec">
+            <div class="bs-sec-h"><h2>Your talks</h2><a href="#talks" anvil:name="all_talks">All talks</a></div>
+            <anvil-component type="RepeatingPanel" name="talks_panel" prop:item_template="MrBigStage.Items.TalkRow" prop:role='["ui-list"]'></anvil-component>
+            <div class="ui-empty" anvil:name="no_talks">
+              <i class="ic ic-cards"></i>
+              <h3>No talks yet</h3>
+              <p>Start from a template: a toast, a pitch, a big-idea talk…</p>
+              <a class="ui-btn primary" href="#talks/new"><i class="ic ic-plus"></i>New talk</a>
+            </div>
+          </section>
+          <section class="bs-sec">
+            <div class="bs-sec-h"><h2>Recent sessions</h2><a href="#progress" anvil:name="history_link">History</a></div>
+            <anvil-component type="RepeatingPanel" name="recent_panel" prop:item_template="MrBigStage.Items.SessionRow" prop:role='["ui-list"]'></anvil-component>
+            <div class="ui-empty" anvil:name="no_recent">
+              <i class="ic ic-mic"></i>
+              <h3>Nothing yet</h3>
+              <p>Your reports show up here after your first time on stage.</p>
+            </div>
+          </section>
+        </div>
+        <div class="bs-col">
+          <section class="ui-card bs-sec" anvil:name="trend_part">
+            <h2>Stage Confidence</h2>
+            <div class="ui-row between">
+              <div>
+                <anvil-component type="Label" name="trend_last" prop:role='["mb-score-xl"]'></anvil-component>
+                <anvil-component type="Label" name="trend_note" prop:role='["fine-print"]'></anvil-component>
+              </div>
+              <anvil-component type="MrBigStage.Components.Chart" name="spark"></anvil-component>
+            </div>
+          </section>
+          <section class="ui-card bs-sec" anvil:name="weak_part">
+            <h2>Work on this</h2>
+            <div class="bs-work">
+              <anvil-component type="Label" name="weak_avg" prop:role='["bs-work-n"]'></anvil-component>
+              <div>
+                <anvil-component type="Label" name="weak_label" prop:role='["bs-work-t"]'></anvil-component>
+                <div class="muted small">your lowest score lately</div>
+              </div>
+            </div>
+            <anvil-component type="Label" name="weak_blurb" prop:role='["bs-work-p"]'></anvil-component>
+            <a class="ui-btn primary block" anvil:name="weak_drill" href="#drills"><i class="ic" anvil:name="weak_icon"></i><anvil-component type="Label" name="weak_drill_text" prop:role='["inline"]'></anvil-component></a>
+          </section>
+          <section class="ui-card bs-sec" anvil:name="nerves_part">
+            <h2>Nerves, before → after</h2>
+            <anvil-component type="RepeatingPanel" name="nerves_panel" prop:item_template="MrBigStage.Items.NervesBar" prop:role='["bs-nerves"]'></anvil-component>
+            <p class="muted small bs-note">Grey before, green after each session. Shorter green bars = the stage calmed you down.</p>
+          </section>
+          <section class="ui-card bs-sec bs-tip">
+            <h2>Tip of the day: <anvil-component type="Label" name="tip_title" prop:role='["inline"]'></anvil-component></h2>
+            <anvil-component type="Label" name="tip_text" prop:role='["bs-tip-p"]'></anvil-component>
+            <a class="small bs-hb" href="#drills/handbook">The speaker's handbook →</a>
+          </section>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

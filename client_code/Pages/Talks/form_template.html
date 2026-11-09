@@ -1,0 +1,64 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div anvil:name="list_part">
+        <div class="ui-page-head">
+          <div><h1>Your talks: what will you say?</h1>
+            <p class="muted">Each talk is a set of cue cards. Practise it as often as you like; every run gets a report.</p></div>
+          <a class="ui-btn primary" href="#talks/new"><i class="ic ic-plus"></i>New talk</a>
+        </div>
+        <anvil-component type="RepeatingPanel" name="talks_panel" prop:item_template="MrBigStage.Items.TalkCard" prop:role='["tk-grid"]'></anvil-component>
+        <div class="ui-empty" anvil:name="no_talks">
+          <i class="ic ic-cards"></i>
+          <h3>No talks yet</h3>
+          <p>Pick a template (toast, pitch, interview answer…) or paste a script you already have.</p>
+          <a class="ui-btn primary" href="#talks/new"><i class="ic ic-plus"></i>New talk</a>
+        </div>
+      </div>
+
+      <div anvil:name="new_part">
+        <a class="ui-btn ghost sm" href="#talks"><i class="ic ic-back"></i>Talks</a>
+        <div class="ui-page-head tk-head">
+          <div><h1>New talk: start from a shape that works</h1>
+            <p class="muted">Each template is a proven structure with example cards. Replace the words with yours.</p></div>
+        </div>
+        <anvil-component type="RepeatingPanel" name="templates_panel" prop:item_template="MrBigStage.Items.TemplateCard" prop:role='["tk-grid"]'></anvil-component>
+      </div>
+
+      <div anvil:name="edit_part">
+        <a class="ui-btn ghost sm" href="#talks"><i class="ic ic-back"></i>Talks</a>
+        <div class="tk-ed">
+          <div>
+            <div class="tk-fields">
+              <label class="ui-field wide"><span>Title</span><anvil-component type="TextBox" name="title_box"></anvil-component></label>
+              <label class="ui-field"><span>Occasion</span><anvil-component type="DropDown" name="occasion_box"></anvil-component></label>
+              <label class="ui-field"><span>Target (min)</span><anvil-component type="TextBox" name="target_box" prop:type="number"></anvil-component></label>
+              <label class="ui-field"><span>Room</span><anvil-component type="DropDown" name="venue_box"></anvil-component></label>
+            </div>
+            <anvil-component type="RepeatingPanel" name="cards_panel" prop:item_template="MrBigStage.Items.CueCard" prop:role='["tk-cards"]'></anvil-component>
+            <div class="ui-row tk-add">
+              <anvil-component type="Button" name="add_button" prop:text="Add a card" prop:role='["btn", "ic-plus"]'></anvil-component>
+              <anvil-component type="Button" name="resplit_button" prop:text="Paste a script into cards" prop:role='["btn", "btn-ghost", "ic-copy"]'></anvil-component>
+            </div>
+          </div>
+          <aside class="tk-side">
+            <div class="ui-card">
+              <h3 class="tk-side-h">Estimated length</h3>
+              <anvil-component type="Label" name="time" prop:text="0:00" prop:role='["tk-time"]'></anvil-component>
+              <div class="tk-bar"><i anvil:name="bar"></i></div>
+              <anvil-component type="Label" name="time_note" prop:role='["fine-print"]'></anvil-component>
+            </div>
+            <div class="ui-card tk-save">
+              <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary", "btn-block", "ic-check"]'></anvil-component>
+              <anvil-component type="Button" name="practise_button" prop:text="Save and practise" prop:role='["btn", "btn-block", "ic-mic"]'></anvil-component>
+            </div>
+            <div class="ui-card">
+              <h3 class="tk-side-h">Cue card craft</h3>
+              <anvil-component type="RepeatingPanel" name="tips_panel" prop:item_template="MrBigStage.Items.Line" prop:role='["tk-tips"]'></anvil-component>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -1,0 +1,26 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="title" prop:role='["page-title"]'></anvil-component>
+          <anvil-component type="Label" name="lead" prop:role='["page-lead"]'></anvil-component>
+        </div>
+      </div>
+      <nav class="ui-tabs">
+        <a href="#drills" anvil:name="tab_gym"><i class="ic ic-dumbbell"></i>Drills</a>
+        <a href="#drills/handbook" anvil:name="tab_handbook"><i class="ic ic-book"></i>Handbook</a>
+      </nav>
+      <div anvil:name="gym_part">
+        <anvil-component type="RepeatingPanel" name="drills_panel" prop:item_template="MrBigStage.Items.DrillCard" prop:role='["dr-grid"]'></anvil-component>
+      </div>
+      <div anvil:name="handbook_part">
+        <anvil-component type="RepeatingPanel" name="handbook_panel" prop:item_template="MrBigStage.Items.HandbookSection" prop:role='["hb"]'></anvil-component>
+        <div class="ui-card hb-blend">
+          <h3>What is "confidence", really?</h3>
+          <anvil-component type="Label" name="blend" prop:role='["fine-print"]'></anvil-component>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

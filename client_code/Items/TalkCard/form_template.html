@@ -1,0 +1,16 @@
+<div class="tk-card-item">
+  <article class="ui-card tk-card">
+    <span class="best"><anvil-component type="MrBigStage.Components.Ring" name="ring" prop:size="48"></anvil-component></span>
+    <anvil-component type="Label" name="title" bind:text="self.item['title']" prop:role='["tk-card-t"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="badges" prop:item_template="MrBigStage.Items.Chip" prop:role='["chips"]'></anvil-component>
+    <anvil-component type="Label" name="first" prop:role='["tk-first"]'></anvil-component>
+    <anvil-component type="Label" name="practised" prop:role='["fine-print"]'></anvil-component>
+    <div class="ui-row">
+      <a class="ui-btn primary sm" anvil:name="practise" href="#talks"><i class="ic ic-mic"></i>Practise</a>
+      <a class="ui-btn sm" anvil:name="edit" href="#talks"><i class="ic ic-edit"></i>Edit</a>
+      <span class="ui-spacer"></span>
+      <anvil-component type="Button" name="dup_button" prop:text="Duplicate" prop:tooltip="Duplicate" prop:role='["btn", "btn-ghost", "btn-icon", "btn-sm", "ic-copy"]'></anvil-component>
+      <anvil-component type="Button" name="del_button" prop:text="Delete" prop:tooltip="Delete" prop:role='["btn", "btn-ghost", "btn-icon", "btn-sm", "ic-trash"]'></anvil-component>
+    </div>
+  </article>
+</div>

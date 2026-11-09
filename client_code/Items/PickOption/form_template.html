@@ -1,0 +1,9 @@
+<div class="mb-pick-item">
+  <button type="button" class="mb-pick-btn" anvil:on-dom:click="self.pick_click">
+    <i class="ic" anvil:name="icon"></i>
+    <span class="mb-pick-txt">
+      <anvil-component type="Label" name="title" bind:text="self.item['title']" prop:role='["pick-title"]'></anvil-component>
+      <anvil-component type="Label" name="sub" bind:text="self.item['sub']" prop:role='["pick-sub"]'></anvil-component>
+    </span>
+  </button>
+</div>

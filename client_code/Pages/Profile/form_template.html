@@ -1,0 +1,60 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap ui-narrow">
+      <div class="pf-head">
+        <anvil-component type="Label" name="initials" prop:role='["pf-avatar"]'></anvil-component>
+        <div>
+          <anvil-component type="Label" name="name_title" prop:role='["pf-title"]'></anvil-component>
+          <anvil-component type="Label" name="email_line" prop:role='["fine-print"]'></anvil-component>
+        </div>
+      </div>
+      <div class="pf-grid">
+        <div class="ui-card ui-stack">
+          <h3>Your name</h3>
+          <label class="ui-field"><span>On your reports and the stage screen</span>
+            <anvil-component type="TextBox" name="name_box"></anvil-component>
+          </label>
+          <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary"]'></anvil-component>
+        </div>
+        <div class="ui-card ui-stack">
+          <h3>Appearance</h3>
+          <p class="muted small">Follow your device, or pick one.</p>
+          <div class="ui-seg">
+            <button type="button" anvil:name="theme_auto" data-theme-pick="auto" anvil:on-dom:click="self.theme_click">Auto</button>
+            <button type="button" anvil:name="theme_light" data-theme-pick="light" anvil:on-dom:click="self.theme_click">Light</button>
+            <button type="button" anvil:name="theme_dark" data-theme-pick="dark" anvil:on-dom:click="self.theme_click">Dark</button>
+          </div>
+          <h3 class="pf-pw">Password</h3>
+          <p class="muted small">We'll email you a link to choose a new one.</p>
+          <anvil-component type="Button" name="reset_button" prop:text="Email me a reset link" prop:role='["btn", "ic-mail"]'></anvil-component>
+        </div>
+      </div>
+      <div class="ui-card ui-stack pf-block">
+        <h3>Speaker settings</h3>
+        <div class="pf-grid">
+          <label class="ui-field"><span>Why you're here</span><anvil-component type="DropDown" name="goal_box"></anvil-component></label>
+          <label class="ui-field"><span>Favourite room</span><anvil-component type="DropDown" name="venue_box"></anvil-component></label>
+          <label class="ui-field"><span>Notes on stage</span><anvil-component type="DropDown" name="prompter_box"></anvil-component></label>
+          <label class="ui-field"><span>Live coach</span><anvil-component type="DropDown" name="coach_box"></anvil-component></label>
+        </div>
+        <label class="ui-field"><span>Filler words to count <em>(with the transcript on)</em></span><anvil-component type="TextBox" name="fillers_box"></anvil-component></label>
+        <anvil-component type="CheckBox" name="record_box" prop:text="Record my voice so I can listen back (kept on this device only)"></anvil-component>
+        <anvil-component type="CheckBox" name="transcript_box" prop:text="Transcript for filler words (sends your speech to your browser's speech service while you talk)"></anvil-component>
+        <div><anvil-component type="Button" name="settings_button" prop:text="Save settings" prop:role='["btn", "btn-primary"]'></anvil-component></div>
+      </div>
+      <div class="ui-card ui-stack pf-block">
+        <h3>Recordings on this device</h3>
+        <anvil-component type="Label" name="tapes_line" prop:text="Recordings of your voice stay in this browser and are never uploaded. We keep the last 12." prop:role='["fine-print"]'></anvil-component>
+        <div><anvil-component type="Button" name="clear_tapes_button" prop:text="Delete all recordings" prop:role='["btn", "btn-danger", "ic-trash"]'></anvil-component></div>
+      </div>
+      <div class="ui-card pf-more">
+        <div class="pf-links">
+          <a href="#admin" anvil:name="admin_link"><i class="ic ic-shield"></i>Admin</a>
+          <button type="button" anvil:on-dom:click="self.feedback_click"><i class="ic ic-chat"></i>Submit feedback</button>
+          <button type="button" data-lk-open="overview"><i class="ic ic-lock"></i>Privacy &amp; Terms, and your data</button>
+          <button type="button" anvil:on-dom:click="self.sign_out_click"><i class="ic ic-logout"></i>Sign out</button>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

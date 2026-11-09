@@ -1,0 +1,126 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="lp">
+      <section class="lp-hero">
+        <div class="ui-wrap">
+          <div>
+            <h1>Own the <em>big stage.</em></h1>
+            <p class="lp-lead">Public speaking, rehearsed in VR. Step onto a theatre stage, a boardroom or a 5,000-seat arena, give your talk to a crowd that reacts, and get coached on how you really sound: pace, pauses, ums, melody, volume and eye contact.</p>
+            <div class="lp-cta" anvil:name="guest_cta">
+              <a class="ui-btn primary lg" href="#stage/sample"><i class="ic ic-play"></i>Try it now, no account</a>
+              <a class="ui-btn lg" href="#auth/signup">Start free</a>
+            </div>
+            <div class="lp-cta" anvil:name="member_cta">
+              <a class="ui-btn primary lg" href="#home">Backstage <i class="ic ic-arrow"></i></a>
+              <anvil-component type="Button" name="stage_button" prop:text="Go on stage" prop:role='["btn", "btn-lg", "ic-mic"]'></anvil-component>
+            </div>
+            <div class="lp-proof">
+              <span><i class="ic ic-check"></i>Works on Meta Quest and in any browser</span>
+              <span><i class="ic ic-check"></i>Your voice never leaves your device</span>
+              <span><i class="ic ic-check"></i>Free</span>
+            </div>
+          </div>
+          <anvil-component type="MrBigStage.Components.Chart" name="art"></anvil-component>
+        </div>
+        <div class="lp-counters">
+          <div class="ui-wrap">
+            <div><anvil-component type="Label" name="c_sessions" prop:text="–" prop:role='["lp-count"]'></anvil-component><span>talks given</span></div>
+            <div><anvil-component type="Label" name="c_minutes" prop:text="–" prop:role='["lp-count"]'></anvil-component><span>minutes on stage</span></div>
+            <div><anvil-component type="Label" name="c_audience" prop:text="–" prop:role='["lp-count"]'></anvil-component><span>audience members faced</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section ytf" id="watch">
+        <div class="ui-wrap">
+          <div class="ytf-in">
+            <div class="ytf-copy">
+              <h2>See MrBigStage in about a minute</h2>
+              <p>A short video tour of what MrBigStage does and how it works.</p>
+              <a class="ytf-link" href="https://www.youtube.com/watch?v=UuQabze-btg" target="_blank" rel="noopener"><svg viewBox="0 0 28 20" width="20" height="14" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#FF0033"/><path d="M11.2 5.8v8.4l7.3-4.2z" fill="#fff"/></svg>Watch on YouTube &#8599;</a>
+            </div>
+            <div>
+              <div class="ytf-frame" anvil:dom-node="yt_frame">
+                <button type="button" class="ytf-cover" anvil:dom-node="yt_cover" aria-label="Play the MrBigStage video (1:13)">
+                  <img src="_/theme/yt-cover.jpg" alt="" loading="lazy" decoding="async" width="960" height="540">
+                  <span class="ytf-play" aria-hidden="true"><svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7a8.5 8.5 0 0 0-6-6C55.3.3 34 .3 34 .3s-21.3 0-26.5 1.4a8.5 8.5 0 0 0-6 6C.1 13 .1 24 .1 24s0 11 1.4 16.3a8.5 8.5 0 0 0 6 6c5.2 1.4 26.5 1.4 26.5 1.4s21.3 0 26.5-1.4a8.5 8.5 0 0 0 6-6C67.9 35 67.9 24 67.9 24s0-11-1.4-16.3z" fill="#FF0033"/><path d="M45 24 27 14v20z" fill="#fff"/></svg></span>
+                  <span class="ytf-len">1:13</span>
+                </button>
+              </div>
+              <p class="ytf-note">The video loads from YouTube when you press play.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section">
+        <div class="ui-wrap">
+          <div class="lp-head">
+            <h2>Confidence, decoded: is it the timbre? The cadence? The pauses?</h2>
+            <p>All of it. Audiences hear confidence as a blend, so we listen for ten things and weigh them by how much people notice them.</p>
+          </div>
+          <anvil-component type="RepeatingPanel" name="parts_panel" prop:item_template="MrBigStage.Items.PartCard" prop:role='["lp-parts"]'></anvil-component>
+          <anvil-component type="MrBigStage.Components.Chart" name="mix"></anvil-component>
+        </div>
+      </section>
+
+      <section class="lp-section lp-tight">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Seven rooms, from three people to five thousand</h2><p>Practise where you'll actually speak, or somewhere much scarier.</p></div>
+          <anvil-component type="RepeatingPanel" name="venues_panel" prop:item_template="MrBigStage.Items.VenueTile" prop:role='["lp-venues"]'></anvil-component>
+        </div>
+      </section>
+
+      <section class="lp-section lp-tight" id="how">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>From nervous to keynote, one rep at a time</h2><p>Five minutes a day is enough. The stage does the rest.</p></div>
+          <div class="lp-steps">
+            <div class="ui-card lp-step"><h3>Write your talk as cue cards</h3><p class="muted">Start from a template (wedding toast, pitch, interview answer, big-idea talk) or paste your script.</p></div>
+            <div class="ui-card lp-step"><h3>Walk onto the red circle</h3><p class="muted">Pick a room and a crowd: warm, neutral or tough. Breathe in the green room, then speak. Cards in your hand, a monitor at your feet.</p></div>
+            <div class="ui-card lp-step"><h3>Get a report, then get better</h3><p class="muted">A Stage Confidence score, ten skills, a second-by-second timeline, your recording and three things to try next.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section lp-tight">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Packed for practice</h2></div>
+          <div class="lp-features">
+            <div class="lp-feature"><i class="ic ic-cards"></i><h3>Cue cards &amp; teleprompter</h3><p>Swipe cards on your controller, read a floor monitor, or let a teleprompter follow your voice and wait when you pause.</p></div>
+            <div class="lp-feature"><i class="ic ic-users"></i><h3>A crowd that reacts</h3><p>Engaged people lean in and nod. Bored ones check their phones. Look at a section and it wakes up.</p></div>
+            <div class="lp-feature"><i class="ic ic-zap"></i><h3>Distractions on demand</h3><p>Coughs, a ringing phone, latecomers, mic squeal. Learn to keep going.</p></div>
+            <div class="lp-feature"><i class="ic ic-hand"></i><h3>Q&amp;A from the floor</h3><p>Hands go up at the end. Interview panels ask the questions you dread.</p></div>
+            <div class="lp-feature"><i class="ic ic-dumbbell"></i><h3>A speaking gym</h3><p>Eleven short drills: the power pause, filler zapper, pitch ladder, lighthouse eye contact, table topics…</p></div>
+            <div class="lp-feature"><i class="ic ic-lungs"></i><h3>Calm before the storm</h3><p>Box breathing in an empty theatre, and a nerves check before and after every talk.</p></div>
+            <div class="lp-feature"><i class="ic ic-trend"></i><h3>Progress you can see</h3><p>Levels from Open Mic to Legend, badges, streaks, and how many people you've faced.</p></div>
+            <div class="lp-feature"><i class="ic ic-lock"></i><h3>Private by design</h3><p>We analyse your voice inside your browser. Only the numbers are saved; recordings stay on your device.</p></div>
+            <div class="lp-feature"><i class="ic ic-eye"></i><h3>VR or not</h3><p>Best in a headset. On a laptop or phone, look around with the mouse and practise all the same.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section lp-tight">
+        <div class="ui-wrap">
+          <div class="lp-head"><h2>Questions</h2></div>
+          <div class="lp-faq">
+            <details><summary>What does "confidence" mean here?</summary><p>Listeners hear confidence as a mix of things, so we measure each one: your pace (words a minute and whether you rush), pauses, hesitation sounds, volume and projection, pitch variety (melody vs monotone), steadiness and timbre (shaky or breathy vs full), how your sentences end (rising like a question or fading), eye contact and gestures, and timing. Each gets a score; the Stage Confidence score blends them, weighted by how much audiences notice them.</p></details>
+            <details><summary>Do I need a VR headset?</summary><p>No. It's built for Meta Quest and other WebXR headsets (open the site in the headset's browser and press Enter VR), but it works on any computer or phone too. On a flat screen, eye contact is measured by where you look with the mouse.</p></details>
+            <details><summary>Is my voice recorded or uploaded?</summary><p>Your microphone is analysed live inside your browser. We save only the numbers (like your pace and how many pauses you made). If you turn on recording, the audio stays in your browser so you can listen back; it is never sent to us.</p></details>
+            <details><summary>How accurate is it?</summary><p>It's a coach, not a lab. Pace and pauses are close; hesitation sounds and sentence endings are good estimates. The most useful thing is the trend: the same measurements, every time, so you can see yourself improve.</p></details>
+            <details><summary>Can I try it without an account?</summary><p>Yes. Try the sample talk or any drill right now. An account (free) saves your talks, reports and progress.</p></details>
+            <details><summary>Who is it for?</summary><p>Anyone who has to speak: a wedding toast, a job interview, a class presentation, a team update, a conference talk, or just being less scared of putting your hand up.</p></details>
+          </div>
+        </div>
+      </section>
+
+      <section class="lp-section lp-tight">
+        <div class="ui-wrap">
+          <div class="lp-band">
+            <div><h2>The audience is waiting.</h2><p>Two minutes, one sample talk, no account needed.</p></div>
+            <a class="ui-btn primary lg" href="#stage/sample"><i class="ic ic-play"></i>Take the stage</a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </anvil-block>
+</anvil-form>
