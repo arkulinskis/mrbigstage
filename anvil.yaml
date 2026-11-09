@@ -333,7 +333,7 @@ metadata:
 name: MrBigStage
 native_deps:
   head_html: |
-    <script src="_/theme/legal-kit.js?v=da3d6d55d8"></script>
+    <script src="_/theme/legal-kit.js?v=8a2e0b4939"></script>
     <!-- seo:start (APP_MAKER/seo: edit seo/apps/mrbigstage.json and run seo.py, not here) -->
     <link rel="canonical" href="https://mrbigstage.anvil.app/">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
