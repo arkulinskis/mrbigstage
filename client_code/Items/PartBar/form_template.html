@@ -1,0 +1,11 @@
+<div class="rp-part-item">
+  <button type="button" class="mb-bar rp-bar" anvil:name="btn" anvil:on-dom:click="self.toggle_click">
+    <span class="mb-bar-l"><i class="ic" anvil:name="icon"></i><anvil-component type="Label" name="label" bind:text="self.item['label']" prop:role='["mb-bar-t"]'></anvil-component></span>
+    <span class="tr"><i anvil:name="fill"></i><b anvil:name="mark"></b></span>
+    <anvil-component type="Label" name="value" prop:role='["mb-bar-v"]'></anvil-component>
+  </button>
+  <div class="rp-why" anvil:name="why">
+    <p><b>What it measures.</b> <anvil-component type="Label" name="what" bind:text="self.item['what']" prop:role='["inline"]'></anvil-component></p>
+    <p><b>What good sounds like.</b> <anvil-component type="Label" name="ideal" bind:text="self.item['ideal']" prop:role='["inline"]'></anvil-component></p>
+  </div>
+</div>

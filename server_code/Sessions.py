@@ -4,6 +4,7 @@ Scoring.py), reports, history, progress (XP, levels, streaks, badges), the home 
 A session row keeps only numbers: the scores, the measured metrics and a compact timeline
 (loudness, pitch, pace and gaze every `step` seconds + events). Audio never reaches the server.
 """
+from typing import Any
 import datetime as dt
 
 import anvil.server
@@ -156,8 +157,8 @@ def _payload(p):
     p = p if isinstance(p, dict) else {}
     kind = p.get("kind") if p.get("kind") in KINDS else "talk"
     venue = p.get("venue") if p.get("venue") in content.VENUE_KEYS else "redcircle"
-    v = content.venue(venue)
-    crowd = p.get("crowd") if isinstance(p.get("crowd"), (int, float)) and not isinstance(p.get("crowd"), bool) else v["crowd"]
+    v: dict = content.venue(venue)
+    crowd: Any = p.get("crowd") if isinstance(p.get("crowd"), (int, float)) and not isinstance(p.get("crowd"), bool) else v["crowd"]
     nerves = {}
     for k in ("nerves_before", "nerves_after"):
         n = p.get(k)

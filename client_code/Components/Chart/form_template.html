@@ -1,0 +1,15 @@
+---
+custom_component: true
+properties:
+  - name: content
+    type: string
+    default_value: ""
+    description: Markup drawn by a JavaScript chart engine
+    default_binding_prop: true
+toolbox_item:
+  title: Engine chart
+  group: MrBigStage
+help_text: |
+  Shows SVG/HTML drawn by MB.* chart functions (theme/assets/mb.js, mb-charts.js).
+---
+<div class="mb-chart" anvil:dom-node="box"></div>

@@ -1,0 +1,8 @@
+<div class="tk-tpl-item">
+  <button type="button" class="ui-card tk-tpl" anvil:on-dom:click="self.pick_click">
+    <i class="ic" anvil:name="icon"></i>
+    <anvil-component type="Label" name="name" bind:text="self.item['name']" prop:role='["tk-tpl-t"]'></anvil-component>
+    <anvil-component type="Label" name="blurb" bind:text="self.item['blurb']" prop:role='["tk-tpl-p"]'></anvil-component>
+    <anvil-component type="RepeatingPanel" name="chips" prop:item_template="MrBigStage.Items.Chip" prop:role='["chips"]'></anvil-component>
+  </button>
+</div>

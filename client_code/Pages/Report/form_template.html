@@ -1,0 +1,92 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div anvil:name="missing">
+      <div class="ui-wrap">
+        <div class="ui-empty">
+          <i class="ic ic-mic"></i>
+          <anvil-component type="Label" name="missing_title" prop:text="No report yet" prop:role='["empty-title"]'></anvil-component>
+          <p>Give a talk first: it takes two minutes.</p>
+          <a class="ui-btn primary" href="#stage/sample">Try the sample talk</a>
+        </div>
+      </div>
+    </div>
+    <div anvil:name="body">
+      <section class="rp-hero">
+        <div class="ui-wrap">
+          <div class="rp-score">
+            <anvil-component type="MrBigStage.Components.Ring" name="ring" prop:size="150"></anvil-component>
+            <span class="rp-breath" anvil:name="breath" aria-label="Breathing session">🫁</span>
+          </div>
+          <div>
+            <anvil-component type="Label" name="kicker" prop:role='["rp-when"]'></anvil-component>
+            <anvil-component type="Label" name="title" prop:role='["rp-title"]'></anvil-component>
+            <anvil-component type="Label" name="band_line" prop:role='["rp-line"]'></anvil-component>
+            <anvil-component type="Label" name="meta" prop:role='["rp-meta"]'></anvil-component>
+          </div>
+          <div class="rp-delta" anvil:name="delta_box">
+            <anvil-component type="Label" name="delta" prop:role='["rp-delta-n"]'></anvil-component>
+            <anvil-component type="Label" name="delta_note" prop:role='["rp-delta-t"]'></anvil-component>
+          </div>
+        </div>
+      </section>
+      <div class="ui-wrap">
+        <div class="ui-row rp-actions">
+          <a class="ui-btn primary" anvil:name="again" href="#stage/sample"><i class="ic ic-refresh"></i>Practise again</a>
+          <a class="ui-btn" anvil:name="progress_link" href="#progress"><i class="ic ic-trend"></i>All progress</a>
+        </div>
+        <div class="rp-grid">
+          <section class="ui-card rp-sec rp-parts">
+            <h2>What we heard and saw</h2>
+            <anvil-component type="RepeatingPanel" name="parts_panel" prop:item_template="MrBigStage.Items.PartBar" prop:role='["mb-bars"]'></anvil-component>
+            <anvil-component type="Label" name="parts_note" prop:role='["fine-print", "rp-note"]'></anvil-component>
+          </section>
+          <section class="ui-card rp-sec">
+            <h2>Your coach says</h2>
+            <anvil-component type="RepeatingPanel" name="tips_panel" prop:item_template="MrBigStage.Items.CoachTip" prop:role='["rp-tips"]'></anvil-component>
+            <anvil-component type="Label" name="no_tips" prop:role='["fine-print"]'></anvil-component>
+            <div anvil:name="strengths_part">
+              <h3 class="rp-h3">Keep doing</h3>
+              <anvil-component type="RepeatingPanel" name="strengths_panel" prop:item_template="MrBigStage.Items.Chip" prop:role='["rp-strip"]'></anvil-component>
+            </div>
+          </section>
+          <section class="ui-card rp-sec rp-wide">
+            <h2>Your talk, second by second</h2>
+            <div class="mb-tlwrap" tabindex="0" aria-label="Timeline (scrolls sideways)"><anvil-component type="MrBigStage.Components.Chart" name="timeline"></anvil-component></div>
+            <anvil-component type="MrBigStage.Components.Chart" name="legend"></anvil-component>
+            <div class="rp-audio"><anvil-component type="MrBigStage.Components.Chart" name="audio"></anvil-component></div>
+          </section>
+          <section class="ui-card rp-sec">
+            <h2>The numbers</h2>
+            <anvil-component type="RepeatingPanel" name="numbers_panel" prop:item_template="MrBigStage.Items.NumberTile" prop:role='["rp-nums"]'></anvil-component>
+            <div anvil:name="eyes_part">
+              <h3 class="rp-h3">Where you looked</h3>
+              <anvil-component type="RepeatingPanel" name="eyes_panel" prop:item_template="MrBigStage.Items.EyeTile" prop:role='["rp-eyes"]'></anvil-component>
+              <anvil-component type="Label" name="eyes_note" prop:role='["fine-print"]'></anvil-component>
+            </div>
+            <div anvil:name="fillers_part">
+              <h3 class="rp-h3">Filler words (transcript)</h3>
+              <anvil-component type="RepeatingPanel" name="fillers_panel" prop:item_template="MrBigStage.Items.Chip" prop:role='["rp-strip"]'></anvil-component>
+            </div>
+          </section>
+          <section class="ui-card rp-sec" anvil:name="guest_part">
+            <h2>Save your progress</h2>
+            <p class="muted">This report lives only in this tab. With a free account every run is saved, compared with the last one and counted towards levels and badges.</p>
+            <a class="ui-btn primary" href="#auth/signup"><i class="ic ic-arrow"></i>Create a free account</a>
+          </section>
+          <section class="ui-card rp-sec" anvil:name="notes_part">
+            <h2>Notes to self</h2>
+            <anvil-component type="Label" name="nerves_line" prop:role='["rp-nv"]'></anvil-component>
+            <div class="ui-stack rp-notes">
+              <anvil-component type="TextArea" name="note_box" prop:placeholder="What went well? One thing to change next time?" prop:height="110"></anvil-component>
+              <div class="ui-row">
+                <anvil-component type="Button" name="save_note_button" prop:text="Save note" prop:role='["btn", "ic-check"]'></anvil-component>
+                <span class="ui-spacer"></span>
+                <anvil-component type="Button" name="delete_button" prop:text="Delete report" prop:role='["btn", "btn-ghost", "btn-danger", "btn-sm", "ic-trash"]'></anvil-component>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

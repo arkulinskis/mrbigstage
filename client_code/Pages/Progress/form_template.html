@@ -1,0 +1,48 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="title" prop:text="Your progress: every rep is evidence" prop:role='["page-title"]'></anvil-component>
+          <p class="muted">Confidence comes from proof that you can do it. Here's yours.</p>
+        </div>
+      </div>
+      <div class="pg-top">
+        <div class="ui-card pg-level">
+          <anvil-component type="Label" name="lv_n" prop:role='["pg-lv-n"]'></anvil-component>
+          <div>
+            <anvil-component type="Label" name="lv_name" prop:role='["pg-lv-name"]'></anvil-component>
+            <anvil-component type="Label" name="lv_xp" prop:role='["fine-print"]'></anvil-component>
+          </div>
+          <div class="bar"><i anvil:name="xp_bar"></i></div>
+          <span class="pg-lv-note">XP: 10 a session, 8 a minute on stage, and a bonus for your score.</span>
+        </div>
+        <anvil-component type="RepeatingPanel" name="stats_panel" prop:item_template="MrBigStage.Items.Stat" prop:role='["pg-stats"]'></anvil-component>
+      </div>
+      <div class="pg-two">
+        <section class="ui-card"><h2 class="pg-h">Stage Confidence over time</h2><anvil-component type="MrBigStage.Components.Chart" name="trend"></anvil-component></section>
+        <section class="ui-card"><h2 class="pg-h">Practice calendar</h2><anvil-component type="MrBigStage.Components.Chart" name="calendar"></anvil-component>
+          <p class="muted small pg-note">The last 12 weeks. Little and often beats a cram the night before.</p></section>
+      </div>
+      <div class="pg-two">
+        <section class="ui-card"><h2 class="pg-h">Your skills, then and now</h2><anvil-component type="MrBigStage.Components.Chart" name="skills"></anvil-component>
+          <p class="muted small pg-note">Bars: your last five sessions. Tick: your first five.</p></section>
+        <section class="ui-card"><h2 class="pg-h">Nerves, before and after</h2><anvil-component type="MrBigStage.Components.Chart" name="nerves"></anvil-component></section>
+      </div>
+      <section class="pg-sec">
+        <anvil-component type="Label" name="badges_title" prop:role='["sec-title"]'></anvil-component>
+        <anvil-component type="RepeatingPanel" name="badges_panel" prop:item_template="MrBigStage.Items.BadgeCard" prop:role='["pg-badges"]'></anvil-component>
+      </section>
+      <section class="pg-sec">
+        <anvil-component type="Label" name="history_title" prop:role='["sec-title"]'></anvil-component>
+        <anvil-component type="RepeatingPanel" name="history_panel" prop:item_template="MrBigStage.Items.SessionRow" prop:role='["ui-list"]'></anvil-component>
+        <div class="ui-empty" anvil:name="no_history">
+          <i class="ic ic-mic"></i>
+          <h3>No sessions yet</h3>
+          <p>Your first talk starts the story.</p>
+          <anvil-component type="Button" name="stage_button" prop:text="Go on stage" prop:role='["btn", "btn-primary", "ic-mic"]'></anvil-component>
+        </div>
+      </section>
+    </div>
+  </anvil-block>
+</anvil-form>

@@ -79,7 +79,7 @@ def save_talk(talk_id, data):
         target = 5
     target = round(max(0.5, min(60, target)), 1)
     cards = clean_cards(data.get("cards"))
-    fields = dict(title=title, occasion=occasion, venue=venue, target_min=target, cards=cards, updated=C.now())
+    fields: dict = dict(title=title, occasion=occasion, venue=venue, target_min=target, cards=cards, updated=C.now())
     if talk_id:
         r = own_talk(talk_id, me)
         if r is None:

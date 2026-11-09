@@ -1,0 +1,15 @@
+<div class="ui mb-pickdlg">
+  <h2 class="dlg-h">Go on stage</h2>
+  <p class="muted">Pick what you'll say. You choose the room, the crowd and your notes next.</p>
+  <div class="mb-pick">
+    <div anvil:name="talks_part">
+      <h3 class="mb-pick-h">Your talks</h3>
+      <anvil-component type="RepeatingPanel" name="talks_panel" prop:item_template="MrBigStage.Items.PickOption" prop:role='["mb-pick-list"]'></anvil-component>
+    </div>
+    <h3 class="mb-pick-h">Or just talk</h3>
+    <anvil-component type="RepeatingPanel" name="more_panel" prop:item_template="MrBigStage.Items.PickOption" prop:role='["mb-pick-list"]'></anvil-component>
+  </div>
+  <div class="ui-row end mb-pick-foot">
+    <anvil-component type="Button" name="close_button" prop:text="Cancel" prop:role='["btn", "btn-ghost"]'></anvil-component>
+  </div>
+</div>
