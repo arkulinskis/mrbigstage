@@ -77,15 +77,15 @@
     const btn = qa('.anvil-role-mb-onstage button')[0];
     if (btn) { btn.click(); await until(() => qa('.mb-pick-btn').length >= 3, 'Go on stage picker'); log.push('ok   Go on stage picker'); const cancel = qa('.modal button, .anvil-modal button').find((b) => /Cancel/.test(b.textContent)); if (cancel) cancel.click(); await sleep(800); }
     await signOut();
-    // admin (the first arkulinskis@gmail.com sign-up becomes admin; later runs sign in)
+    // admin (the first admin@example.com sign-up becomes admin; later runs sign in)
     const pw = 'Adm-9x-Smoke-Test-Pw';
     location.hash = '#auth';
     await until(() => window.UI_READY && qa('.au-card input').length >= 2, 'sign-in form');
     let ins = qa('.au-card input[type=email], .au-card input[type=password]');
-    type(ins[0], 'arkulinskis@gmail.com'); type(ins[1], pw);
+    type(ins[0], 'admin@example.com'); type(ins[1], pw);
     qa('.anvil-role-btn-block button').find((b) => /Sign in/.test(b.textContent)).click();
     await sleep(2500);
-    if (location.hash !== '#home') await signUp('The Admin', 'arkulinskis@gmail.com', pw);
+    if (location.hash !== '#home') await signUp('The Admin', 'admin@example.com', pw);
     for (const h of ['#admin', '#admin/stage', '#admin/feedback', '#admin/users', '#admin/demo']) await check(h, () => q('.ui-tabs a[href="#admin/stage"]'));
     log.push(bad.length ? 'PROBLEMS: ' + bad.join(' | ') : 'PASSED');
     return { ok: !bad.length, log: log };

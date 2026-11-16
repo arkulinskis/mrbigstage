@@ -33,7 +33,7 @@ conference talk, or just stage fright. Built on [Anvil](https://anvil.works).
 - **Progress** (`#progress`): level (Open Mic → Legend), totals, Stage Confidence over time (click a point), 12-week calendar, skills first-five vs last-five, nerves trend, 16 badges, full history.
 - **Profile:** goal, favourite room, notes, coach, filler-word list, recording and transcript switches, delete recordings on this device.
 
-**For admins** (`#admin`; arkulinskis@gmail.com becomes an admin on first sign-in):
+**For admins** (`#admin`; your admin email (App Secret `admin_emails`) becomes an admin on first sign-in):
 - **Stages:** sessions, minutes, speakers, average score; rooms and drills used, VR vs screen, average per skill, latest sessions (with/without demo speakers).
 - **Feedback inbox, Users, Demo data** (four demo speakers with talks and 16 sessions each, getting better over time).
 
@@ -44,7 +44,7 @@ conference talk, or just stage fright. Built on [Anvil](https://anvil.works).
 1. In the Anvil editor: **Create app → Clone from GitHub**, and paste `https://github.com/arkulinskis/mrbigstage`.
 2. **Users** service: email + password and "Continue with Google", sign-up allowed (already set in `anvil.yaml`; check it).
 3. Open the app in the editor. If it shows a **Schema Mismatch** alert, choose **"The schema of the source code is correct"** so Anvil creates the tables.
-4. **Run** it and sign up with **arkulinskis@gmail.com** straight away (that account becomes the admin).
+4. **Run** it and sign up with **your admin email** (App Secret `admin_emails`) straight away (that account becomes the admin).
 5. **Publish** (Publish → public URL, or your own domain). The microphone and VR need HTTPS, which Anvil provides.
 
 <!-- libraries:start -->
