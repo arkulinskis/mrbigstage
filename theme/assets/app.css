@@ -1198,3 +1198,84 @@ anvil-dropzone { display: contents; }
 .bs-tip h2 { display: block; }
 .ui-empty .ui-btn .ic { width: 18px; height: 18px; margin: 0; color: inherit; }
 .ui .pg-h { font-size: 1.15rem; }
+
+/* ---------------------------------------------------------------- improvement round 2026-11-20 */
+/* the big day (Backstage) */
+.bd-card { border-color: color-mix(in srgb, var(--c-brand) 35%, var(--c-line)); }
+.bd-top { display: flex; gap: 16px; align-items: center; }
+.bd-head { min-width: 0; display: grid; gap: 2px; }
+.bd-k { font: 700 .76rem/1.2 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--c-muted); display: inline-flex; align-items: center; gap: 6px; }
+.bd-k .ic { width: 14px; height: 14px; color: var(--c-brand); }
+.anvil-role-bd-title { font: 900 1.3rem/1.15 var(--font-display); overflow-wrap: anywhere; }
+.anvil-role-bd-when { color: var(--c-brand); font-weight: 700; }
+.bd-today { margin: 14px 0 12px; padding: 12px 14px; border-radius: 12px; background: var(--c-surface-2); display: grid; gap: 4px; }
+.anvil-role-bd-step { font-size: .98rem; line-height: 1.45; }
+.bd-actions { flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+
+/* the ladder link (Backstage + Drills) */
+.bs-ladder, .dr-ladder { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; text-decoration: none; color: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-press) var(--ease-out); }
+.bs-ladder:hover, .dr-ladder:hover { border-color: var(--c-brand); }
+.bs-ladder:active, .dr-ladder:active { transform: scale(.99); }
+.bs-ladder > span, .dr-ladder > span { display: grid; gap: 2px; min-width: 0; }
+.bs-ladder > .ic:first-child, .dr-ladder > .ic:first-child { width: 38px; height: 38px; padding: 9px; border-radius: 50%; background: var(--c-brand-soft); color: var(--c-brand); }
+.bs-ladder > .ic:last-child, .dr-ladder > .ic:last-child { width: 18px; height: 18px; color: var(--c-muted); }
+.dr-ladder { margin-bottom: 18px; }
+
+/* the ladder page */
+.ld-top { display: grid; grid-template-columns: 1fr 1.4fr; gap: 18px; margin-bottom: 18px; }
+.ld-progress { display: grid; gap: 8px; align-content: start; }
+.ld-k { font: 700 .76rem/1.2 var(--font-body); letter-spacing: .06em; text-transform: uppercase; color: var(--c-muted); }
+.anvil-role-ld-count { font: 900 2.4rem/1 var(--font-display); }
+.ld-bar { height: 8px; border-radius: 9px; background: var(--c-surface-2); overflow: hidden; }
+.ld-bar i { display: block; height: 100%; background: var(--c-brand); border-radius: 9px; transition: width var(--dur-slow) var(--ease-out); }
+.ld-how h2 { font-size: 1.1rem; margin: 0 0 8px; }
+.ld-how ol { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; color: var(--c-muted); }
+.ld-guest { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+.ld-guest p { margin: 0; }
+.ld-error { margin-bottom: 18px; }
+.anvil-role-ld-list > div { display: grid; gap: 12px; position: relative; }
+.ld-rung { display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 16px 18px; }
+.anvil-role-ld-num { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 900 1.2rem var(--font-display);
+  background: var(--c-surface-2); color: var(--c-muted); border: 2px solid var(--c-line); }
+.ld-rung.next .anvil-role-ld-num { background: var(--c-brand); color: var(--c-brand-ink); border-color: var(--c-brand); box-shadow: 0 0 0 5px var(--c-brand-soft); }
+.ld-rung.climbed .anvil-role-ld-num { background: var(--c-good-soft); color: var(--c-good); border-color: var(--c-good); }
+.ld-rung.next { border-color: var(--c-brand); }
+.ld-rung.locked { opacity: .72; }
+.ld-body { min-width: 0; display: grid; gap: 3px; }
+.ld-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.anvil-role-ld-name { font: 800 1.08rem/1.2 var(--font-display); }
+.anvil-role-ld-status { font: 700 .72rem/1 var(--font-body); padding: 5px 9px; border-radius: 99px; background: var(--c-surface-2); color: var(--c-muted); }
+.anvil-role-ld-status.anvil-role-good { background: var(--c-good-soft); color: var(--c-good); }
+.anvil-role-ld-status.anvil-role-brand { background: var(--c-brand-soft); color: var(--c-brand); }
+.anvil-role-ld-meta { color: var(--c-muted); font-size: .86rem; }
+.anvil-role-ld-goal { font-size: .95rem; }
+.ld-go { display: grid; justify-items: end; }
+.ld-lock { color: var(--c-muted); font-size: .82rem; display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+.ld-lock .ic { width: 14px; height: 14px; }
+.ld-note { margin-top: 18px; }
+
+/* talk editor: questions you expect */
+.tk-qs textarea { width: 100%; min-height: 110px; resize: vertical; }
+
+@media (max-width: 720px) {
+  .ld-top { grid-template-columns: 1fr; }
+  .ld-rung { grid-template-columns: auto 1fr; }
+  .ld-go { grid-column: 1 / -1; justify-items: stretch; }
+  .ld-go .ui-btn { justify-content: center; }
+  .ld-lock { justify-content: center; }
+}
+
+/* Anvil's DatePicker input has no type attribute, and its calendar is white: style both from the tokens */
+.ui .anvil-datepicker input { font: inherit; font-size: 1rem; color: var(--c-ink); background: var(--c-surface); border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm); padding: 11px 13px; width: 100%; min-height: 46px; margin: 0; box-shadow: none; height: auto;
+  transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease; }
+.ui .anvil-datepicker input:focus { outline: none; border-color: var(--c-brand); box-shadow: 0 0 0 3px var(--c-brand-soft); }
+.ui .anvil-datepicker .fa-calendar { color: var(--c-muted); }
+.daterangepicker { background: var(--c-surface); border-color: var(--c-line); color: var(--c-ink); font-family: var(--font-body); }
+.daterangepicker .calendar-table { background: var(--c-surface); border-color: var(--c-surface); }
+.daterangepicker td.off, .daterangepicker td.disabled { background: transparent; color: var(--c-faint); }
+.daterangepicker td.available:hover, .daterangepicker th.available:hover { background: var(--c-surface-2); color: var(--c-ink); }
+.daterangepicker td.active, .daterangepicker td.active:hover { background: var(--c-brand); color: var(--c-brand-ink); }
+.daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span { border-color: var(--c-ink); }
+.daterangepicker:after { border-bottom-color: var(--c-surface); }

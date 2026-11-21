@@ -11,6 +11,8 @@ class TalkRow(TalkRowTemplate):
         t = self.item
         bits = ["%s min" % t["target_min"], state.plural(len(t.get("cards") or []), "card"), mb.venue_name(t.get("venue")),
                 "practised " + state.plural(t["practiced"], "time") if t.get("practiced") else "not practised yet"]
+        if t.get("days_left") is not None and t["days_left"] >= 0:
+            bits.insert(0, "big day today" if t["days_left"] == 0 else "big day in " + state.plural(t["days_left"], "day"))
         self.meta.text = " · ".join(bits)
         self.best.visible = t.get("best") is not None
         if t.get("best") is not None:

@@ -56,16 +56,22 @@
   }
   const STAGE_READY = () => window.MB_STAGE && q('.st-panel') && !/Setting up the room/.test(q('.st-panel').textContent);
   try {
-    for (const h of ['#landing', '#auth', '#auth/signup', '#drills', '#drills/handbook', '#report/guest']) await check(h);
+    for (const h of ['#landing', '#auth', '#auth/signup', '#drills', '#drills/handbook', '#report/guest', '#ladder']) await check(h);
+    await check('#stage/rung:1', STAGE_READY);
     await check('#stage/sample', STAGE_READY);
     await check('#stage/drill:topics', STAGE_READY);
     await check('#landing');
     // member
     await signUp('Smoke Tester', 'smoke' + Date.now() + '@example.com', 'Hb-' + Math.random().toString(36).slice(2) + '-Kq7');
-    for (const h of ['#home', '#talks', '#talks/new', '#drills', '#progress', '#profile']) await check(h);
+    for (const h of ['#home', '#talks', '#talks/new', '#drills', '#progress', '#profile', '#ladder']) await check(h);
     const c = await call('get_content');
     const t = await call('new_talk_from_template', [c.result.templates[0].key]);
     const tid = t.result.talk.id;
+    const soon = new Date(Date.now() + 5 * 864e5).toISOString().slice(0, 10);
+    const sv = await call('save_talk', [tid, { title: 'Smoke talk', cards: t.result.talk.cards, event_date: soon, questions: ['Why you?', 'What does it cost?'] }]);
+    const svOk = sv.result && sv.result.ok && sv.result.talk.event_date === soon && sv.result.talk.questions.length === 2;
+    log.push((svOk ? 'ok   ' : 'FAIL ') + 'big day + questions saved'); if (!svOk) bad.push('save_talk big day: ' + JSON.stringify(sv).slice(0, 160));
+    await check('#home', () => q('.bd-card') && q('.bd-card').offsetParent);
     await check('#talks/' + encodeURIComponent(tid), () => qa('.tk-c').length > 0);
     await check('#stage/' + encodeURIComponent(tid), STAGE_READY);
     const s = await call('save_session', [{ kind: 'talk', talk_id: tid, title: 'Smoke run', venue: 'redcircle', crowd: 40, mode: 'flat',

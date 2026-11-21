@@ -403,13 +403,44 @@ BADGES = [
 
 NERVES = ["", "Calm", "A little nervous", "Nervous", "Very nervous", "Terrified"]
 
+# The stage-fright ladder: graded exposure, from one kind face to a tough arena. Each rung presets the room,
+# crowd size (fill = share of the room's seats), mood and distractions. A rung is climbed after a run there that
+# ends with nerves at "A little nervous" or calmer (LADDER_CALM), or after LADDER_RUNS runs; then the next unlocks.
+LADDER = [
+    {"n": 1, "name": "One kind face", "venue": "interview", "fill": 0.25, "mood": "warm", "distractions": [], "qa": False, "minutes": 1,
+     "goal": "Talk for one minute to one friendly person. That's all.", "why": "Start where it's easy, so your body learns the stage is safe."},
+    {"n": 2, "name": "A small table", "venue": "boardroom", "fill": 0.3, "mood": "warm", "distractions": [], "qa": False, "minutes": 1,
+     "goal": "Four people who like you. Look at each of them once.", "why": "A few faces at once: practise moving your eyes from person to person."},
+    {"n": 3, "name": "The full table", "venue": "boardroom", "fill": 1.0, "mood": "neutral", "distractions": [], "qa": False, "minutes": 2,
+     "goal": "Fourteen colleagues, neutral faces. Two minutes.", "why": "Neutral faces are not bored faces. Learn to keep going without nods."},
+    {"n": 4, "name": "A class of sixty", "venue": "lecture", "fill": 0.5, "mood": "neutral", "distractions": ["cough"], "qa": False, "minutes": 2,
+     "goal": "Sixty students, the odd cough. Keep your thread.", "why": "Small noises happen in every real room. Notice them, carry on."},
+    {"n": 5, "name": "Raise a glass", "venue": "wedding", "fill": 1.0, "mood": "warm", "distractions": ["cough", "late"], "qa": False, "minutes": 2,
+     "goal": "A full wedding reception. People arrive late; you keep smiling.", "why": "Big but kind: get used to the size before the toughness."},
+    {"n": 6, "name": "Town hall", "venue": "townhall", "fill": 1.0, "mood": "neutral", "distractions": ["phone", "late"], "qa": True, "minutes": 3,
+     "goal": "Four hundred neighbours, a ringing phone, then three questions.", "why": "Questions are the scariest part for most people. Face them here first."},
+    {"n": 7, "name": "The Red Circle", "venue": "redcircle", "fill": 1.0, "mood": "tough", "distractions": ["cough", "phone", "leave"], "qa": False, "minutes": 3,
+     "goal": "1,200 seats, arms crossed. Someone walks out. Win them back.", "why": "A tough crowd is a skill, not a verdict. Slow down and look at the friendly ones."},
+    {"n": 8, "name": "The Arena", "venue": "arena", "fill": 1.0, "mood": "tough", "distractions": ["cough", "phone", "late", "leave", "feedback"], "qa": True, "minutes": 3,
+     "goal": "5,000 people, every distraction, then questions. You've earned this.", "why": "If you can do this, the real room will feel small."},
+]
+LADDER_CALM = 2
+LADDER_RUNS = 2
+
+
+def rung(n):
+    for r in LADDER:
+        if r["n"] == n:
+            return r
+    return None
+
 
 def public():
     """What the browser needs, in one go."""
     return {"parts": PARTS, "bands": [{"min": b[0], "name": b[1], "line": b[2]} for b in BANDS],
             "venues": VENUES, "moods": MOODS, "prompters": PROMPTERS, "coach": COACH_LEVELS, "distractions": DISTRACTIONS,
             "templates": TEMPLATES, "occasions": OCCASIONS, "sample": SAMPLE_TALK, "drills": DRILLS, "topics": TOPICS,
-            "questions": QUESTIONS, "handbook": HANDBOOK, "goals": GOALS,
+            "questions": QUESTIONS, "handbook": HANDBOOK, "goals": GOALS, "ladder": LADDER,
             "levels": [{"xp": x, "name": n} for x, n in LEVELS], "badges": BADGES, "nerves": NERVES}
 
 

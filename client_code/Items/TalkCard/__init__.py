@@ -16,6 +16,10 @@ class TalkCard(TalkCardTemplate):
         self.ring.score = t.get("best")
         self.badges.items = [occ["name"] if occ else "Talk", "%s min" % t["target_min"], state.plural(len(t.get("cards") or []), "card"),
                              mb.venue_name(t.get("venue"))]
+        if t.get("days_left") is not None and t["days_left"] >= 0:
+            self.badges.items = [{"text": "Today" if t["days_left"] == 0 else "In " + state.plural(t["days_left"], "day"), "icon": "calendar", "kind": "warn"}] + self.badges.items
+        if t.get("questions"):
+            self.badges.items = self.badges.items + [state.plural(len(t["questions"]), "question")]
         cards = t.get("cards") or []
         self.first.text = cards[0]["text"] if cards else "No cards yet."
         last = t.get("last")

@@ -10,6 +10,7 @@ import datetime as dt
 import anvil.server
 from anvil.tables import app_tables
 import anvil.tables as tables
+import anvil.tables.query as tq
 
 from . import common as C
 from . import content, DemoData, Scoring, Talks
@@ -96,6 +97,21 @@ def get_stage(ref):
             return C.fail("That drill doesn't exist.")
         out["drill"] = d
         out["previous"] = _previous(me, drill=d["key"])
+    elif ref.startswith("rung:"):
+        try:
+            rg = content.rung(int(ref[5:]))
+        except ValueError:
+            rg = None
+        if rg is None:
+            return C.fail("That rung doesn't exist.")
+        lad = ladder_state(me)
+        if not lad["rungs"][rg["n"] - 1]["open"]:
+            return C.fail("Climb the rungs below this one first." if me else "Create a free account to climb past the first rung.")
+        topic = content.TOPICS[(C.now().toordinal() + rg["n"]) % len(content.TOPICS)]
+        out["talk"] = {"id": ref, "title": "Ladder %d: %s" % (rg["n"], rg["name"]), "occasion": "other", "target_min": rg["minutes"],
+                       "venue": rg["venue"], "cards": [{"text": "%s Need something to say? %s" % (rg["goal"], topic), "slide": rg["name"]}]}
+        out["ladder"] = rg
+        out["preset"] = {"venue": rg["venue"], "fill": rg["fill"], "mood": rg["mood"], "distractions": list(rg["distractions"]), "qa": rg["qa"]}
     elif ref == "sample":
         out["talk"] = content.SAMPLE_TALK
     elif ref == "free":
@@ -167,6 +183,8 @@ def _payload(p):
             "mood": p.get("mood") if p.get("mood") in [m["key"] for m in content.MOODS] else "neutral",
             "mode": p.get("mode") if p.get("mode") in MODES else "flat",
             "drill": p.get("drill") if p.get("drill") in content.DRILL_KEYS else None,
+            "ladder": int(p["ladder"]) if isinstance(p.get("ladder"), (int, float)) and not isinstance(p.get("ladder"), bool)
+            and content.rung(int(p["ladder"])) else None,
             "title": C.text(p.get("title"), 120) or "Untitled talk", "reflection": C.text(p.get("reflection"), 1000, multiline=True),
             **nerves}
 
@@ -206,6 +224,12 @@ def save_session(payload):
         mood=p["mood"], mode=p["mode"], seconds=m.get("secs") or 0, confidence=s["confidence"], parts=s["parts"],
         metrics=m, timeline=clean_timeline(payload.get("timeline")), nerves_before=p["nerves_before"],
         nerves_after=p["nerves_after"], reflection=p["reflection"], created=C.now(), is_demo=False)
+    rg = content.rung(p["ladder"]) if p["ladder"] else None
+    if rg and p["venue"] == rg["venue"] and p["crowd"] >= content.venue(rg["venue"])["max"] * rg["fill"] * 0.8:
+        try:  # new column, guarded until the schema change is accepted
+            r["ladder"] = rg["n"]
+        except Exception:
+            pass
     after = progress_core(me)
     new_badges = [b for b in content.BADGES if b["key"] in after["earned"] and b["key"] not in before["earned"]]
     return C.ok(id=r.get_id(), score=_score_public(s), xp_gained=after["xp"] - before["xp"], level=after["level"],
@@ -419,6 +443,13 @@ def get_home():
         if avgs:
             a, p = min(avgs, key=lambda x: x[0])
             weak = {"part": p["key"], "label": p["label"], "avg": a, "drill": p["drill"]}
+    big_day = None
+    today = C.now().date()
+    dated = [(Talks.col(r, "event_date"), r) for r in talks]
+    dated = [(d, r) for d, r in dated if isinstance(d, dt.date) and d >= today]
+    if dated:
+        d, r = min(dated, key=lambda x: x[0])
+        big_day = dict(Talks.talk_dict(r, stats=False), readiness=Talks.readiness(r))
     tips = [t for sec in content.HANDBOOK for t in sec["tips"]]
     tip = tips[C.now().date().toordinal() % len(tips)]
     return {"goal": me["goal"], "prefs": prefs_of(me), "level": core["level"], "xp": core["xp"], "streak": core["streak"],
@@ -426,8 +457,38 @@ def get_home():
             "talks": [Talks.talk_dict(r) for r in talks[:3]], "talk_count": len(talks), "recent": recent,
             "trend": [r["confidence"] for r in rows if r["confidence"] is not None][-12:], "sessions": len(rows),
             "minutes": int(round(sum(r["seconds"] or 0 for r in rows) / 60.0)), "audience": sum(r["crowd"] or 0 for r in rows),
-            "weak": weak, "tip": {"title": tip[0], "text": tip[1]},
+            "weak": weak, "tip": {"title": tip[0], "text": tip[1]}, "big_day": big_day, "ladder_climbed": ladder_state(me)["climbed"],
             "nerves": [[r["nerves_before"], r["nerves_after"]] for r in rows[-8:] if r["nerves_before"] and r["nerves_after"]]}
+
+
+# ------------------------------------------------------------------------------------------------ stage-fright ladder
+def ladder_state(me):
+    """Each rung: open (unlocked), climbed, runs, nerves (best before -> after drop). Guests: only rung 1 is open."""
+    runs: dict = {}
+    if me is not None:
+        try:
+            for r in app_tables.sessions.search(tables.order_by("created", ascending=True), user=me, ladder=tq.not_(None)):
+                runs.setdefault(int(r["ladder"]), []).append(r)
+        except Exception:
+            runs = {}   # the ladder column isn't there yet
+    out, prev_climbed = [], True
+    for rg in content.LADDER:
+        rows = runs.get(rg["n"], [])
+        calm = [r for r in rows if r["nerves_after"] and r["nerves_after"] <= content.LADDER_CALM]
+        climbed = bool(calm) or len(rows) >= content.LADDER_RUNS
+        drops = [(r["nerves_before"], r["nerves_after"]) for r in rows if r["nerves_before"] and r["nerves_after"]]
+        best = max(drops, key=lambda d: d[0] - d[1]) if drops else None
+        is_open = prev_climbed if me is not None else rg["n"] == 1
+        out.append(dict(rg, open=is_open, climbed=climbed, runs=len(rows), nerves=list(best) if best else None,
+                        best=max([r["confidence"] or 0 for r in rows]) if rows else None))
+        prev_climbed = climbed
+    top = max([x["n"] for x in out if x["climbed"]] or [0])
+    return {"rungs": out, "climbed": top, "total": len(out), "signed_in": me is not None}
+
+
+@anvil.server.callable
+def get_ladder():
+    return ladder_state(C.me())
 
 
 @anvil.server.callable

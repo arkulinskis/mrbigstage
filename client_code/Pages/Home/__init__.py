@@ -17,6 +17,7 @@ class Home(HomeTemplate):
     def __init__(self, args=(), **properties):
         super().__init__(**properties)
         self.goals_panel.add_event_handler("x-goal", self._goal)
+        self.bigday_part.visible = False
         self.d = state.call("get_home")
         self.c = mb.content()
         if self.d:
@@ -87,8 +88,37 @@ class Home(HomeTemplate):
         nerves = d.get("nerves") or []
         self.nerves_part.visible = len(nerves) >= 2
         self.nerves_panel.items = [{"before": n[0], "after": n[1], "title": "%s → %s" % (c["nerves"][n[0]], c["nerves"][n[1]])} for n in nerves]
+        self._draw_big_day(d.get("big_day"))
+        lc = d.get("ladder_climbed") or 0
+        if lc >= 8:
+            self.ladder_text.text = "All eight rungs climbed. The Arena is yours."
+        elif lc:
+            self.ladder_text.text = "%d of 8 rungs climbed. Next: one step bigger." % lc
+        else:
+            self.ladder_text.text = "Nervous? Eight small steps from one kind face to a 5,000-seat arena."
         self.tip_title.text = d["tip"]["title"]
         self.tip_text.text = d["tip"]["text"]
+
+    def _draw_big_day(self, b):
+        """The nearest talk with a date: countdown, readiness ring and today's one step (Talks.readiness)."""
+        self.bigday_part.visible = bool(b)
+        if not b:
+            return
+        r = b["readiness"]
+        left = b.get("days_left")
+        self.bd_title.text = b["title"]
+        self.bd_when.text = "Today. You've got this." if left == 0 else "Tomorrow" if left == 1 else "In %d days · %s" % (left, mb.date(b["event_date"]))
+        self.bd_ring.score = r["pct"]
+        self.bd_step.text = r["step"]["text"]
+        self.bd_go_text.text = r["step"]["button"]
+        go = r["step"]["go"]
+        state.set_attr(self.bd_go, "href", router.href("stage", b["id"] if go == "talk" else go))
+        state.set_attr(self.bd_edit, "href", router.href("talks", b["id"]))
+        facts = [state.plural(r["runs"], "run") + " so far"]
+        if r.get("best") is not None:
+            facts.append("best of the last three: %d" % r["best"])
+        facts.append("pressure run done" if r["pressure"] else "no pressure run yet")
+        self.bd_facts.text = " · ".join(facts) + ". Readiness = runs, recent scores and one run under pressure."
 
     def _draw_goals(self):
         goal = self.d.get("goal")

@@ -36,6 +36,25 @@
     <div class="ui-wrap">
       <div class="bs-grid">
         <div class="bs-col">
+          <section class="ui-card bs-sec bd-card" anvil:name="bigday_part">
+            <div class="bd-top">
+              <anvil-component type="MrBigStage.Components.Ring" name="bd_ring" prop:size="76" prop:label="ready"></anvil-component>
+              <div class="bd-head">
+                <span class="bd-k"><i class="ic ic-calendar"></i> The big day</span>
+                <anvil-component type="Label" name="bd_title" prop:role='["bd-title"]'></anvil-component>
+                <anvil-component type="Label" name="bd_when" prop:role='["bd-when"]'></anvil-component>
+              </div>
+            </div>
+            <div class="bd-today">
+              <span class="bd-k">Today</span>
+              <anvil-component type="Label" name="bd_step" prop:role='["bd-step"]'></anvil-component>
+            </div>
+            <div class="ui-row bd-actions">
+              <a class="ui-btn primary" anvil:name="bd_go" href="#talks"><i class="ic ic-mic"></i><anvil-component type="Label" name="bd_go_text" prop:text="Practise" prop:role='["inline"]'></anvil-component></a>
+              <a class="ui-btn ghost sm" anvil:name="bd_edit" href="#talks"><i class="ic ic-edit"></i>Edit talk</a>
+            </div>
+            <anvil-component type="Label" name="bd_facts" prop:role='["fine-print"]'></anvil-component>
+          </section>
           <section class="bs-sec" anvil:name="goals_part">
             <h2>What brings you to the stage?</h2>
             <anvil-component type="RepeatingPanel" name="goals_panel" prop:item_template="MrBigStage.Items.GoalButton" prop:role='["bs-goals"]'></anvil-component>
@@ -96,6 +115,11 @@
             <anvil-component type="RepeatingPanel" name="nerves_panel" prop:item_template="MrBigStage.Items.NervesBar" prop:role='["bs-nerves"]'></anvil-component>
             <p class="muted small bs-note">Grey before, green after each session. Shorter green bars = the stage calmed you down.</p>
           </section>
+          <a class="ui-card bs-sec bs-ladder" href="#ladder" anvil:name="ladder_link">
+            <i class="ic ic-up"></i>
+            <span><b>Stage-fright ladder</b><anvil-component type="Label" name="ladder_text" prop:role='["fine-print"]'></anvil-component></span>
+            <i class="ic ic-arrow"></i>
+          </a>
           <section class="ui-card bs-sec bs-tip">
             <h2>Tip of the day: <anvil-component type="Label" name="tip_title" prop:role='["inline"]'></anvil-component></h2>
             <anvil-component type="Label" name="tip_text" prop:role='["bs-tip-p"]'></anvil-component>

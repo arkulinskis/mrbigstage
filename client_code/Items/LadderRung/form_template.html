@@ -1,0 +1,18 @@
+<div class="ld-item">
+  <article class="ui-card ld-rung" anvil:name="card">
+    <anvil-component type="Label" name="num" prop:role='["ld-num"]'></anvil-component>
+    <div class="ld-body">
+      <div class="ld-head">
+        <anvil-component type="Label" name="name" bind:text="self.item['name']" prop:role='["ld-name"]'></anvil-component>
+        <anvil-component type="Label" name="status" prop:role='["ld-status"]'></anvil-component>
+      </div>
+      <anvil-component type="Label" name="meta" prop:role='["ld-meta"]'></anvil-component>
+      <anvil-component type="Label" name="goal" bind:text="self.item['goal']" prop:role='["ld-goal"]'></anvil-component>
+      <anvil-component type="Label" name="facts" prop:role='["fine-print"]'></anvil-component>
+    </div>
+    <div class="ld-go">
+      <a class="ui-btn primary sm" anvil:name="start" href="#ladder"><i class="ic ic-up"></i><anvil-component type="Label" name="start_text" prop:text="Step up" prop:role='["inline"]'></anvil-component></a>
+      <span class="ld-lock" anvil:name="lock_note"><i class="ic ic-lock"></i> Climb the one below first</span>
+    </div>
+  </article>
+</div>

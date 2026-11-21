@@ -1,4 +1,5 @@
 from anvil import *
+import datetime
 import anvil.js
 from anvil.js import window
 
@@ -9,6 +10,17 @@ from ...Items.CueCard import WPM, words
 BLANK = {"title": "Untitled talk", "occasion": "other", "target_min": 5, "venue": "redcircle", "cards": [{"text": "Start here."}]}
 CRAFT = ["Write how you speak, not how you write.", "One idea per card. Put a big word on the screen for each.",
          "Mark a pause with \" / \" and stage directions in (brackets)."]
+
+
+def _date(iso):
+    """'2026-12-24' -> a date (or None) for the DatePicker."""
+    if not iso:
+        return None
+    try:
+        y, m, d = [int(x) for x in iso[:10].split("-")]
+        return datetime.date(y, m, d)
+    except (TypeError, ValueError):
+        return None
 
 
 class Talks(TalksTemplate):
@@ -83,6 +95,10 @@ class Talks(TalksTemplate):
         state.set_control_attr(self.target_box, "min", "0.5")
         state.set_control_attr(self.target_box, "max", "60")
         state.set_control_attr(self.target_box, "step", "0.5")
+        self.date_box.date = _date(t.get("event_date"))
+        self.date_box.min_date = datetime.date.today()
+        self.questions_box.text = "\n".join(t.get("questions") or [])
+        state.set_control_attr(self.questions_box, "aria-label", "Questions you expect, one per line")
         tpl = c["template_by"].get(t["occasion"])
         self.tips_panel.items = list((tpl or {}).get("tips") or []) + CRAFT
         self.cards = [{"text": x.get("text") or "", "slide": x.get("slide") or ""} for x in t["cards"]] or [{"text": "", "slide": ""}]
@@ -165,6 +181,14 @@ class Talks(TalksTemplate):
     def venue_box_change(self, **event_args):
         self._set_dirty()
 
+    @handle("date_box", "change")
+    def date_box_change(self, **event_args):
+        self._set_dirty()
+
+    @handle("questions_box", "change")
+    def questions_box_change(self, **event_args):
+        self._set_dirty()
+
     @handle("add_button", "click")
     def add_button_click(self, **event_args):
         self.cards.append({"text": "", "slide": ""})
@@ -186,12 +210,17 @@ class Talks(TalksTemplate):
             return None
         r = state.call("save_talk", self.talk["id"], {
             "title": title, "occasion": self.occasion_box.selected_value, "target_min": self._target(),
-            "venue": self.venue_box.selected_value, "cards": [x for x in self.cards if x["text"].strip()]})
+            "venue": self.venue_box.selected_value, "cards": [x for x in self.cards if x["text"].strip()],
+            "event_date": self.date_box.date.isoformat() if self.date_box.date else None,
+            "questions": [x.strip() for x in (self.questions_box.text or "").split("\n") if x.strip()]})
         if r:
             self.dirty = False
             window.removeEventListener("beforeunload", self._unload)
             self.talk = r["talk"]
-            state.toast("Saved", "ok")
+            if r.get("warning"):
+                state.toast(r["warning"], "error")
+            else:
+                state.toast("Saved", "ok")
         return r
 
     @handle("save_button", "click")

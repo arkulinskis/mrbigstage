@@ -1,0 +1,40 @@
+<anvil-form layout="MrBigStage.Layouts.Shell">
+  <anvil-block slot="content">
+    <div class="ui-wrap">
+      <div class="ui-page-head">
+        <div>
+          <anvil-component type="Label" name="title" prop:text="The stage-fright ladder: one rung at a time" prop:role='["page-title"]'></anvil-component>
+          <p class="muted">Nerves fade when you face a room in small, safe steps. Start with one kind face; finish in front of 5,000.</p>
+        </div>
+      </div>
+      <div class="ui-card ld-error" anvil:name="error_part">
+        <h3>The ladder didn't load</h3>
+        <p class="muted">Check your connection and reload the page.</p>
+      </div>
+      <div anvil:name="main_part">
+        <div class="ld-top">
+          <section class="ui-card ld-progress">
+            <span class="ld-k">Climbed</span>
+            <anvil-component type="Label" name="count" prop:text="0 of 8" prop:role='["ld-count"]'></anvil-component>
+            <div class="ld-bar"><i anvil:name="bar"></i></div>
+            <anvil-component type="Label" name="status" prop:role='["fine-print"]'></anvil-component>
+          </section>
+          <section class="ui-card ld-how">
+            <h2>How it works</h2>
+            <ol>
+              <li>Rate your nerves in the green room, then speak about anything for a minute or two.</li>
+              <li>Afterwards, rate them again. “A little nervous” or calmer climbs the rung; otherwise a second run does.</li>
+              <li>Each rung adds people, tougher faces or distractions. Repeat any rung as often as you like.</li>
+            </ol>
+          </section>
+        </div>
+        <div class="ui-card ld-guest" anvil:name="guest_part">
+          <p><b>Rung 1 is open to everyone.</b> Create a free account to keep your climb and unlock the rest.</p>
+          <a class="ui-btn primary sm" href="#auth/signup"><i class="ic ic-user"></i>Create a free account</a>
+        </div>
+        <anvil-component type="RepeatingPanel" name="rungs_panel" prop:item_template="MrBigStage.Items.LadderRung" prop:role='["ld-list"]'></anvil-component>
+        <p class="muted small ld-note">This is practice, not therapy. If fear of speaking keeps you from things that matter to you, a therapist trained in CBT can help a lot.</p>
+      </div>
+    </div>
+  </anvil-block>
+</anvil-form>

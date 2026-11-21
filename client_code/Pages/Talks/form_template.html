@@ -34,6 +34,7 @@
               <label class="ui-field"><span>Occasion</span><anvil-component type="DropDown" name="occasion_box"></anvil-component></label>
               <label class="ui-field"><span>Target (min)</span><anvil-component type="TextBox" name="target_box" prop:type="number"></anvil-component></label>
               <label class="ui-field"><span>Room</span><anvil-component type="DropDown" name="venue_box"></anvil-component></label>
+              <label class="ui-field"><span>The big day (optional)</span><anvil-component type="DatePicker" name="date_box" prop:placeholder="When do you give it?" prop:format="D MMM YYYY"></anvil-component></label>
             </div>
             <anvil-component type="RepeatingPanel" name="cards_panel" prop:item_template="MrBigStage.Items.CueCard" prop:role='["tk-cards"]'></anvil-component>
             <div class="ui-row tk-add">
@@ -51,6 +52,11 @@
             <div class="ui-card tk-save">
               <anvil-component type="Button" name="save_button" prop:text="Save" prop:role='["btn", "btn-primary", "btn-block", "ic-check"]'></anvil-component>
               <anvil-component type="Button" name="practise_button" prop:text="Save and practise" prop:role='["btn", "btn-block", "ic-mic"]'></anvil-component>
+            </div>
+            <div class="ui-card tk-qs">
+              <h3 class="tk-side-h">Questions you expect</h3>
+              <anvil-component type="TextArea" name="questions_box" prop:placeholder="One per line, e.g.&#10;Why should we hire you?&#10;What does it cost?" prop:height="120"></anvil-component>
+              <anvil-component type="Label" name="questions_note" prop:text="Turn on audience questions in the stage setup: the crowd asks these first." prop:role='["fine-print"]'></anvil-component>
             </div>
             <div class="ui-card">
               <h3 class="tk-side-h">Cue card craft</h3>

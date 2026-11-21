@@ -18,6 +18,7 @@ PAGES = {
     "home": ("user", "Backstage"),
     "talks": ("user", "Talks"),
     "drills": (None, "Drills"),
+    "ladder": (None, "Stage-fright ladder"),
     "progress": ("user", "Progress"),
     "stage": (None, "On stage"),       # talk ids need an account: Pages/Stage sends guests to sign in itself
     "report": (None, "Report"),        # report/guest is the guest preview (this tab only); others need an account
@@ -46,6 +47,9 @@ def _form(name):
     if name == "drills":
         from .Pages.Drills import Drills
         return Drills
+    if name == "ladder":
+        from .Pages.Ladder import Ladder
+        return Ladder
     if name == "progress":
         from .Pages.Progress import Progress
         return Progress
@@ -79,10 +83,10 @@ def home_page():
 
 def needs_account(name, args):
     """A talk on stage (#stage/<talk id>) and a saved report (#report/<id>) are private; the sample, free talks,
-    drills (#stage/drill:<key>) and the guest's preview report (#report/guest) are open to everyone."""
+    drills (#stage/drill:<key>), ladder rungs (#stage/rung:<n>; the server opens only unlocked ones) and the guest's preview report (#report/guest) are open to everyone."""
     ref = args[0] if args else ""
     if name == "stage":
-        return bool(ref) and ref not in ("sample", "free") and not ref.startswith("drill:")
+        return bool(ref) and ref not in ("sample", "free") and not ref.startswith("drill:") and not ref.startswith("rung:")
     if name == "report":
         return bool(ref) and ref != "guest"
     return False

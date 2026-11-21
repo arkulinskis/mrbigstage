@@ -10,7 +10,7 @@
   /* MB.mountStage(view, {args, me}) -> {ready, destroy}: Pages/Stage calls it on show and destroy() on hide. */
   MB.mountStage = function (view, ctx) {
     var ref = ctx.args[0] || 'sample';
-    var isPublic = ref === 'sample' || ref === 'free' || ref.indexOf('drill:') === 0;
+    var isPublic = ref === 'sample' || ref === 'free' || ref.indexOf('drill:') === 0 || ref.indexOf('rung:') === 0;
     if (!isPublic && !ctx.me) { UI.after = '#stage/' + ref; UI.go('auth'); return Promise.resolve(); }
     var TEST = window.MB_TEST || null;
 
@@ -36,6 +36,7 @@
     /* ---------------------------------------------------------------- settings */
     function guestPrefs() { return UI.store.get('guestPrefs', {}); }
     function savePrefs() {
+      if (info && info.preset) return;   // a ladder rung's room is its own, not the speaker's favourite
       var p = { venue: S.venue, mood: S.mood, prompter: S.prompter, coach: S.coach, fill: S.fill, distractions: S.distractions, qa: S.qa,
         record: S.record, transcript: S.transcript, house_lights: S.house_lights, applause: S.applause };
       if (ctx.me) UI.apiQuiet('save_prefs', p).catch(function () {}); else UI.store.set('guestPrefs', p);
@@ -132,11 +133,13 @@
       var v = venueInfo(), cur = function (list, k) { return (list.filter(function (o) { return o.key === k; })[0] || {}).blurb || ''; };
       var prev = info.previous;
       panel.hidden = false;
-      panel.innerHTML = '<div class="st-card" data-setup><div class="st-tag"><i></i>' + (drill ? 'Drill' : ref === 'sample' ? 'Sample talk' : ref === 'free' ? 'Free talk' : 'Your talk') + '</div>' +
+      panel.innerHTML = '<div class="st-card" data-setup><div class="st-tag"><i></i>' + (drill ? 'Drill' : info.ladder ? 'Stage-fright ladder · rung ' + info.ladder.n + ' of ' + C.ladder.length : ref === 'sample' ? 'Sample talk' : ref === 'free' ? 'Free talk' : 'Your talk') + '</div>' +
         '<h1>' + esc(title) + '</h1>' +
         '<p>' + esc(drill ? drill.blurb : cardsN ? UI.plural(cardsN, 'card') + (talk.target_min ? ' · aim for ' + talk.target_min + ' min' : '') : 'No cards: just you, the room and the clock.') +
+        (info.ladder ? ' ' + esc(info.ladder.why) : '') +
         (prev ? ' · Last time <b>' + (prev.last == null ? '–' : prev.last) + '</b>, best <b>' + (prev.best == null ? '–' : prev.best) + '</b>.' : '') + '</p>' +
         (drill && drill.breathing ? '' :
+        (info.ladder ? '<p class="st-hint st-ladder-hint">This rung’s room, crowd and mood are set for you. Keep the room and at least most of the crowd for the run to count as a climb.</p>' : '') +
         '<h3>The room</h3><div class="st-venues">' + venueBtns + '</div><p class="st-hint" data-vblurb>' + esc(v.blurb) + '</p>' +
         '<div class="st-grid2"><div><h3>Crowd size: <span data-crowdn>' + MB.num(crowdCount()) + '</span></h3><input class="st-range" type="range" min="0.2" max="1" step="0.05" value="' + S.fill + '" data-fill aria-label="Crowd size"></div>' +
         '<div><h3>The crowd is</h3>' + seg('mood', C.moods, S.mood) + '<p class="st-hint" data-hint-mood>' + esc(cur(C.moods, S.mood)) + '</p></div></div>' +
@@ -144,7 +147,7 @@
         '<div><h3>Live coach</h3>' + seg('coach', C.coach, S.coach) + '<p class="st-hint" data-hint-coach>' + esc(cur(C.coach, S.coach)) + '</p></div></div>' +
         '<h3>Extras</h3><div class="st-grid2">' +
         '<div>' + C.distractions.map(function (d) { return '<label class="st-check"><input type="checkbox" data-dis="' + d.key + '"' + (S.distractions.indexOf(d.key) >= 0 ? ' checked' : '') + '>' + esc(d.name) + '</label>'; }).join('') + '</div>' +
-        '<div><label class="st-check"><input type="checkbox" data-opt="qa"' + (S.qa || (drill && drill.qa) ? ' checked' : '') + (drill && drill.qa ? ' disabled' : '') + '>Questions from the audience at the end</label>' +
+        '<div><label class="st-check"><input type="checkbox" data-opt="qa"' + (S.qa || (drill && drill.qa) ? ' checked' : '') + (drill && drill.qa ? ' disabled' : '') + '>Questions from the audience at the end' + (myQuestions().length ? ' <b>(your ' + UI.plural(myQuestions().length, 'question') + ' first)</b>' : '') + '</label>' +
         '<label class="st-check"><input type="checkbox" data-opt="applause"' + (S.applause ? ' checked' : '') + '>Applause when you walk on and off</label>' +
         '<label class="st-check"><input type="checkbox" data-opt="house_lights"' + (S.house_lights ? ' checked' : '') + '>House lights up (see faces better)</label>' +
         '<label class="st-check"><input type="checkbox" data-opt="record"' + (S.record ? ' checked' : '') + '>Record my voice to listen back (stays on this device)</label>' +
@@ -550,11 +553,15 @@
     }
 
     /* ---------------------------------------------------------------- Q&A */
+    function myQuestions() { return (!drill && talk && talk.questions) ? talk.questions.filter(function (q) { return q && q.trim(); }) : []; }
     function questionSet() {
+      var mine = myQuestions().slice(), pick = [];
+      while (pick.length < (mine.length > 3 ? 5 : 3) && mine.length) pick.push(mine.splice(Math.floor(Math.random() * mine.length), 1)[0]);
+      if (pick.length >= 3) return pick;
       var key = S.venue === 'interview' ? 'interview' : S.venue === 'boardroom' ? 'boardroom' : S.venue === 'townhall' ? 'townhall' : 'general';
       var list = (C.questions[key] || []).concat(key === 'general' ? [] : C.questions.general.slice(0, 4)), out = [];
-      while (out.length < 3 && list.length) out.push(list.splice(Math.floor(Math.random() * list.length), 1)[0]);
-      return out;
+      while (pick.length + out.length < 3 && list.length) out.push(list.splice(Math.floor(Math.random() * list.length), 1)[0]);
+      return pick.concat(out);
     }
     function startQA() {
       state = 'qa';
@@ -657,7 +664,7 @@
       var tl = voice ? voice.timeline(R.gaze.map(function (g) { return [g[0], g[1]]; })) : { step: 1, events: [] };
       return { kind: drill ? 'drill' : ref === 'sample' ? 'sample' : ref === 'free' ? 'impromptu' : 'talk', drill: drill ? drill.key : null,
         talk_id: drill || isPublic ? null : talk.id, title: drill ? drill.name + (R.topic ? ': ' + R.topic : '') : talk.title, venue: S.venue, crowd: crowdCount(), mood: S.mood,
-        mode: mode, nerves_before: nervesBefore, nerves_after: nervesAfter, metrics: metrics, timeline: tl };
+        mode: mode, nerves_before: nervesBefore, nerves_after: nervesAfter, metrics: metrics, timeline: tl, ladder: info.ladder ? info.ladder.n : null };
     }
 
     /* ---------------------------------------------------------------- results */
@@ -689,9 +696,9 @@
         ((sc.tips || []).length ? '<div class="st-tips">' + sc.tips.map(function (t) { return '<div class="st-tip"><b>' + esc(t.label) + ' · ' + t.score + '</b>' + esc(t.text) + '</div>'; }).join('') + '</div>' : '') +
         '<h3>How do you feel now?</h3><div class="st-nerves" data-nerves="after">' + [1, 2, 3, 4, 5].map(function (n) {
           return '<button data-n="' + n + '" class="' + (nervesAfter === n ? 'on' : '') + '"><span>' + NERVE_FACES[n] + '</span>' + esc(C.nerves[n]) + '</button>';
-        }).join('') + '</div>' + (nervesBefore ? '<p class="st-hint">Before: ' + NERVE_FACES[nervesBefore] + ' ' + esc(C.nerves[nervesBefore]) + '</p>' : '') +
+        }).join('') + '</div>' + (info.ladder && id ? '<p class="st-hint">On the ladder: tap “' + esc(C.nerves[2]) + '” or calmer to climb this rung (or come back for a second run).</p>' : '') + (nervesBefore ? '<p class="st-hint">Before: ' + NERVE_FACES[nervesBefore] + ' ' + esc(C.nerves[nervesBefore]) + '</p>' : '') +
         (id ? '<h3>One line for next time</h3><textarea data-reflect maxlength="1000" placeholder="What went well? One thing to change?"></textarea>' : '') +
-        '<div class="st-actions"><button class="st-btn ghost" data-leave>' + UI.icon('back') + 'Leave</button><button class="st-btn" data-again>' + UI.icon('refresh') + 'Go again</button>' +
+        '<div class="st-actions"><button class="st-btn ghost" data-leave>' + UI.icon('back') + (info.ladder ? 'The ladder' : 'Leave') + '</button><button class="st-btn" data-again>' + UI.icon('refresh') + 'Go again</button>' +
         (noScore && drill && drill.breathing ? '' : '<button class="st-btn red big" data-report>' + UI.icon('chart') + 'Full report</button>') + '</div>' +
         (!ctx.me ? '<p class="st-hint" style="text-align:right;margin-top:10px">This was a preview. <a href="#auth/signup" data-go="auth/signup" style="color:#ff6a5c">Create a free account</a> to save your talks, reports and progress.</p>' : '') + '</div>';
     }
@@ -885,7 +892,7 @@
       showMic();
     }
     function leave() {
-      saveReflection().then(function () { UI.go(ctx.me ? (drill ? 'drills' : isPublic ? 'home' : 'talks') : 'landing'); });
+      saveReflection().then(function () { UI.go(info && info.ladder ? 'ladder' : ctx.me ? (drill ? 'drills' : isPublic ? 'home' : 'talks') : 'landing'); });
     }
 
     /* ---------------------------------------------------------------- DOM events */
@@ -975,10 +982,10 @@
       if (!alive) return;
       C = r[0]; info = r[1]; T = r[2];
       tmpV = new T.Vector3(); tmpV2 = new T.Vector3(); headV = new T.Vector3(); dirV = new T.Vector3(); quat = new T.Quaternion();
-      S = Object.assign({}, info.prefs, ctx.me ? {} : guestPrefs());
+      S = Object.assign({}, info.prefs, ctx.me ? {} : guestPrefs(), info.preset || {});
       talk = info.talk || { title: 'Talk', cards: [], target_min: 0, venue: S.venue };
       drill = info.drill || null;
-      if (drill) S.venue = drill.venue; else if (talk.venue && !isPublic) S.venue = talk.venue;
+      if (drill) S.venue = drill.venue; else if (talk.venue && (!isPublic || info.ladder)) S.venue = talk.venue;
       if (!C.venueBy[S.venue]) S.venue = 'redcircle';
       cards = drill ? (drill.cards || []).slice() : (talk.cards || []).slice();
       init3D();
